@@ -54,7 +54,8 @@ async function sign_upPost(req, res, next){
         })
     }
     try {
-        await pool.query("INSERT INTO users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4)", [req.body.firstname, req.body.lastname, req.body.username, req.body.password])
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        await pool.query("INSERT INTO users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4)", [req.body.firstname, req.body.lastname, req.body.username, hashedPassword])
         res.redirect("/")
     
     }catch(err){
