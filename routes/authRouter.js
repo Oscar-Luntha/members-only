@@ -12,4 +12,12 @@ authRouter.post("/sign-in", passport.authenticate("local", {
 authRouter.get("/sign-up", authController.sign_upGet)
 authRouter.get("/sign-in", authController.sign_inGet)
 authRouter.post("/sign-up", authController.validateSignUp ,authController.sign_upPost)
+authRouter.get("/log-out", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
 module.exports = authRouter
