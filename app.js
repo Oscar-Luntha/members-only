@@ -8,7 +8,7 @@ const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcryptjs"); // Added bcrypt
 const authRouter = require("./routes/authRouter");
-
+const dashboardRouter = require("./routes/dashboardRouter");
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
@@ -74,6 +74,7 @@ passport.deserializeUser(async (id, done) => {
 // Routes
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
+app.use("/dashboard", dashboardRouter); // Register dashboard route
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
