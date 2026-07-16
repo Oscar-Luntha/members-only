@@ -17,7 +17,7 @@ const SQL = `
   name VARCHAR(100) UNIQUE NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  created_by INTEGER UNIQUE NOT NULL,
+  created_by INTEGER NOT NULL,
 
   CONSTRAINT fk_creator
     FOREIGN KEY (created_by)
