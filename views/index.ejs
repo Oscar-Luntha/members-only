@@ -22,10 +22,12 @@
 <body>
 
     <header>
-        <h2>🏰 Members Only</h2>
+        <h2>Members Only</h2>
         <nav>
             <% if (locals.user) { %>
-                <span>Welcome back, <strong><%= user.username %></strong>!</span>
+                <span>Welcome <strong> <a href="/dashboard"><%= user.username %></a></strong>!</span>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/clubhouses/explore">Clubhouses</a>
                 <a href="/auth/log-out">Log Out</a>
             <% } else { %>
                 <a href="/auth/sign-in">Sign In</a>
