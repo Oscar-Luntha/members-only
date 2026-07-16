@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Clubhouses</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f6f8; margin: 0; padding: 0; }
+        header { padding: 15px 30px; background-color: #2c3e50; color: white; display: flex; justify-content: space-between; }
+        header a { color: white; text-decoration: none; font-weight: bold; }
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .details h3 { margin: 0; color: #2c3e50; }
+        .privacy-badge { font-size: 0.8em; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .public { background-color: #2ecc71; color: white; }
+        .private { background-color: #e67e22; color: white; }
+        .btn { background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn:hover { background: #2980b9; }
+        .error-message { background-color: #e74c3c; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏰 Clubhouse Registry</h2>
+        <a href="/dashboard">Back to Dashboard</a>
+    </header>
+
+    <div class="container">
+        <h1>Find Your Next Club</h1>
+        
+        <% if (locals.error) { %>
+            <div class="error-message">⚠️ <%= error %></div>
+        <% } %>
+
+        <% if (clubs.length > 0) { %>
+            <% clubs.forEach(club => { %>
+                <div class="card">
+                    <div class="details">
+                        <h3>c/<%= club.name %> <span class="privacy-badge <%= club.is_public ? 'public' : 'private' %>"><%= club.is_public ? 'Public' : 'Private' %></span></h3>
+                        <p style="color: #7f8c8d; margin: 5px 0 0 0;"><%= club.description %></p>
+                    </div>
+                    <div>
+                        <form action="/clubhouses/join" method="POST" style="display: flex; gap: 10px;">
+                            <input type="hidden" name="clubhouse_id" value="<%= club.id %>">
+                            <% if (!club.is_public) { %>
+                                <input type="password" name="security_code" placeholder="Enter security code" required style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <% } %>
+                            <button type="submit" class="btn">Join</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No new clubhouses available to join. Why not create one yourself?</p>
+        <% } %>
+    </div>
+</body>
+</html>
