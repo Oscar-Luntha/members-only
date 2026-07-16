@@ -6,9 +6,12 @@ const pool = require("./db/pool");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require("bcryptjs"); // Added bcrypt
+const bcrypt = require("bcryptjs");
 const authRouter = require("./routes/authRouter");
 const dashboardRouter = require("./routes/dashboardRouter");
+const clubhouseRouter = require("./routes/clubhouseRouter"); 
+
+
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
@@ -75,7 +78,7 @@ passport.deserializeUser(async (id, done) => {
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/dashboard", dashboardRouter); // Register dashboard route
-
+app.use("/clubhouses", clubhouseRouter)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
     if(error){
